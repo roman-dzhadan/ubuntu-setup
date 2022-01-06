@@ -13,8 +13,8 @@ GRADLE_VERSION=7.3.3
 sudo snap remove docker && \
 	sudo snap install docker && \
 	sudo adduser $USER docker && \
-	snap disable docker && \
-	snap enable docker && \
+	sudo snap disable docker && \
+	sudo snap enable docker && \
 	docker --version && \
 	docker ps -a
 
