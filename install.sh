@@ -2,7 +2,7 @@
 
 set -e
 
-mkdir -p /devkit
+sudo mkdir -p /devkit
 
 JAVA_VERSION=17
 GRAALVM_VERSION=21.3.0
