@@ -41,14 +41,19 @@ fi
 # gradle
 if [ ! -f "/usr/bin/gradle" ]; then
 	echo "Gradle Installation" && \
-		wget -qO- https://downloads.gradle-dn.com/distributions/gradle-${GRADLE_VERSION}-bin.zip | busybox unzip - -d /devkit && \
+		wget -qO- https://downloads.gradle-dn.com/distributions/gradle-${GRADLE_VERSION}-bin.zip | sudo busybox unzip - -d /devkit && \
 		sudo ln -sf /devkit/gradle-${GRADLE_VERSION}/bin/gradle /usr/bin/ && \
 		sudo chmod +x /devkit/gradle-${GRADLE_VERSION}/bin/gradle && \
 		gradle --version
 fi
 
 # google chrome
-wget -qO- https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb | sudo apt install
+if [ "$(dpkg -l | grep google-chrome)" = "" ]; then
+	echo "Google Chrome Installation" && \
+		wget -O /tmp/google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+		sudo dpkg -i /tmp/google-chrome-stable_current_amd64.deb && \
+		rm -f /tmp/google-chrome-stable_current_amd64.deb
+fi
 
 # git
 sudo apt install git-all -y
