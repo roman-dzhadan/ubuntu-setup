@@ -13,11 +13,11 @@ GRADLE_VERSION=7.3.3
 if [ "$(snap list | grep docker)" = "" ]; then
 	echo "Docker Installation" && \
 		sudo snap install docker && \
+		sudo addgroup --system docker && \
 		sudo adduser $USER docker && \
 		sudo snap disable docker && \
 		sudo snap enable docker && \
-		docker --version && \
-		docker ps -a
+		docker --version
 fi
 
 # graalvm cc & prerequisites
@@ -26,7 +26,8 @@ if [ ! -f "/usr/bin/java" ]; then
 		sudo apt-get install build-essential libz-dev zlib1g-dev -y && \
 		wget -qO- https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAALVM_VERSION}/graalvm-ce-java${JAVA_VERSION}-linux-amd64-${GRAALVM_VERSION}.tar.gz | sudo tar -xvz -C /devkit && \
 		sudo ln -sf /devkit/graalvm-ce-java${JAVA_VERSION}-${GRAALVM_VERSION}/bin/* /usr/bin/ && \
-		gu install native-image && \
+		sudo gu install native-image && \
+		sudo ln -sf /devkit/graalvm-ce-java${JAVA_VERSION}-${GRAALVM_VERSION}/bin/* /usr/bin/ && \
 		java --version
 fi
 
