@@ -2,23 +2,13 @@
 
 set -e
 
-sudo mkdir -p /devkit
-
+DEVKIT_HOME=~/DevKit
 JAVA_VERSION=17
-GRAALVM_VERSION=21.3.0
-MAVEN_VERSION=3.8.4
-GRADLE_VERSION=7.3.3
+GRAALVM_VERSION=22.0.0.2
+MAVEN_VERSION=3.8.5
+GRADLE_VERSION=7.4.1
 
-# docker
-if [ "$(snap list | grep docker)" = "" ]; then
-	echo "Docker Installation" && \
-		sudo snap install docker && \
-		sudo addgroup --system docker && \
-		sudo adduser $USER docker && \
-		sudo snap disable docker && \
-		sudo snap enable docker && \
-		docker --version
-fi
+mkdir -p $DEVKIT_HOME
 
 # graalvm cc & prerequisites
 if [ ! -f "/usr/bin/java" ]; then
@@ -83,6 +73,17 @@ fi
 if [ "$(snap list | grep telegram-desktop)" = "" ]; then
 	echo "Telegram Installation" && \
 		sudo snap install telegram-desktop
+fi
+
+# docker
+if [ "$(snap list | grep docker)" = "" ]; then
+	echo "Docker Installation" && \
+		sudo snap install docker && \
+		sudo addgroup --system docker && \
+		sudo adduser $USER docker && \
+		sudo snap disable docker && \
+		sudo snap enable docker && \
+		docker --version
 fi
 
 # shortcuts
