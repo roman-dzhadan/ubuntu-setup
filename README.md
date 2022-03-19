@@ -1,5 +1,2 @@
-# ubuntu-setup
-
-Run a command as a regular $USER and provide admin password on demand.
-
-`bash install.sh`
+# Run Command
+```curl -s https://raw.githubusercontent.com/roman-dzhadan/ubuntu-setup/main/install.sh | bash```
