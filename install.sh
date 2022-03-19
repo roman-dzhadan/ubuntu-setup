@@ -11,7 +11,9 @@ fi
 DEVKIT_HOME=~/DevKit
 JAVA_VERSION=17
 FULL_JAVA_VERSION=17.0.2
+GRAALVM_VERSION=22.0.0.2
 MAVEN_VERSION=3.8.5
+GRADLE_VERSION=7.4.1
 
 mkdir -p $DEVKIT_HOME
 
@@ -22,16 +24,17 @@ if [ ! -f "${DEVKIT_HOME}/jdk-${FULL_JAVA_VERSION}/bin/java" ]; then
 	sudo ln -sf ${DEVKIT_HOME}/jdk-${FULL_JAVA_VERSION}/bin/* /usr/bin/ && \
 	java --version
 fi
+
 # graalvm cc & prerequisites
-#if [ ! -f "/usr/bin/java" ]; then
-#	echo "GraalVM Installation" && \
-#		sudo apt-get install build-essential libz-dev zlib1g-dev -y && \
-#		wget -qO- https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAALVM_VERSION}/graalvm-ce-java${JAVA_VERSION}-linux-amd64-${GRAALVM_VERSION}.tar.gz | sudo tar -xvz -C /devkit && \
-#		sudo ln -sf /devkit/graalvm-ce-java${JAVA_VERSION}-${GRAALVM_VERSION}/bin/* /usr/bin/ && \
-#		sudo gu install native-image && \
-#		sudo ln -sf /devkit/graalvm-ce-java${JAVA_VERSION}-${GRAALVM_VERSION}/bin/* /usr/bin/ && \
-#		java --version
-#fi
+if [ ! -f "${DEVKIT_HOME}/graalvm-ce-java${JAVA_VERSION}-${GRAALVM_VERSION}/bin/java" ]; then
+	echo "GraalVM Installation" && \
+		sudo apt-get install build-essential libz-dev zlib1g-dev -y && \
+		wget -qO- https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAALVM_VERSION}/graalvm-ce-java${JAVA_VERSION}-linux-amd64-${GRAALVM_VERSION}.tar.gz | sudo tar -xvz -C ${DEVKIT_HOME} && \
+		sudo ln -sf ${DEVKIT_HOME}/graalvm-ce-java${JAVA_VERSION}-${GRAALVM_VERSION}/bin/* /usr/bin/ && \
+		sudo gu install native-image && \
+		sudo ln -sf ${DEVKIT_HOME}/graalvm-ce-java${JAVA_VERSION}-${GRAALVM_VERSION}/bin/* /usr/bin/ && \
+		java --version
+fi
 
 # maven
 if [ ! -f "${DEVKIT_HOME}/apache-maven-${MAVEN_VERSION}/bin/mvn" ]; then
@@ -39,6 +42,16 @@ if [ ! -f "${DEVKIT_HOME}/apache-maven-${MAVEN_VERSION}/bin/mvn" ]; then
 	wget -qO- https://dlcdn.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz | sudo tar -xvz -C ${DEVKIT_HOME} && \
 	sudo ln -sf ${DEVKIT_HOME}/apache-maven-${MAVEN_VERSION}/bin/mvn /usr/bin/ && \
 	mvn --version
+fi
+
+# gradle
+if [ ! -f "${DEVKIT_HOME}/gradle-${GRADLE_VERSION}/bin/gradle" ]; then
+	echo "Gradle Installation" && \
+	wget -q -O /tmp/gradle-${GRADLE_VERSION}-bin.zip https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip && \
+	unzip /tmp/gradle-${GRADLE_VERSION}-bin.zip -d ${DEVKIT_HOME} && \
+	rm /tmp/gradle-${GRADLE_VERSION}-bin.zip && \
+	sudo ln -sf ${DEVKIT_HOME}/gradle-${GRADLE_VERSION}/bin/gradle /usr/bin/ && \
+	gradle --version
 fi
 
 # idea
@@ -76,6 +89,20 @@ if [ "$(snap list | grep docker)" = "" ]; then
 	sudo snap disable docker && \
 	sudo snap enable docker && \
 	docker --version
+fi
+
+# curl
+sudo apt install curl -y
+
+# steam
+if [ "$(dpkg -l | grep steam-launcher)" = "" ]; then
+	echo "Steam Installation" && \
+	sudo dpkg --add-architecture i386 && \
+	sudo apt update && \
+	sudo apt install libc6:amd64 libc6:i386 libegl1:amd64 libegl1:i386 libgbm1:amd64 libgbm1:i386 libgl1-mesa-dri:amd64 libgl1-mesa-dri:i386 libgl1:amd64 libgl1:i386 steam-libs-amd64:amd64 steam-libs-i386:i386 -y && \
+	wget -O /tmp/steam.deb https://cdn.akamai.steamstatic.com/client/installer/steam.deb && \
+	sudo dpkg -i /tmp/steam.deb && \
+	rm -f /tmp/steam.deb
 fi
 
 # shortcuts
