@@ -20,7 +20,7 @@ GRADLE_VERSION=7.4.1
 mkdir -p $DEVKIT_HOME
 sudo rm -rf $DEVKIT_HOME/*
 
-# graalvm cc & prerequisites
+# oracle graalvm cc & prerequisites
 echo "GraalVM Installation" && \
 sudo apt-get install build-essential libz-dev zlib1g-dev -y && \
 wget -qO- https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAALVM_VERSION}/graalvm-ce-java${GRAALVM_JAVA_VERSION}-linux-amd64-${GRAALVM_VERSION}.tar.gz | sudo tar -xvz -C ${DEVKIT_HOME} && \
@@ -35,7 +35,7 @@ wget -qO- https://download.oracle.com/java/${JAVA_VERSION}/latest/jdk-${JAVA_VER
 sudo ln -sf ${DEVKIT_HOME}/jdk-${FULL_JAVA_VERSION}/bin/* /usr/bin/ && \
 java --version
 
-# maven
+# apache maven
 echo "Maven Installation" && \
 wget -qO- https://dlcdn.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz | sudo tar -xvz -C ${DEVKIT_HOME} && \
 sudo ln -sf ${DEVKIT_HOME}/apache-maven-${MAVEN_VERSION}/bin/mvn /usr/bin/ && \
@@ -49,7 +49,7 @@ rm /tmp/gradle-${GRADLE_VERSION}-bin.zip && \
 sudo ln -sf ${DEVKIT_HOME}/gradle-${GRADLE_VERSION}/bin/gradle /usr/bin/ && \
 gradle --version
 
-# idea
+# jetbrains intellij idea
 if [ "$(snap list | grep intellij-idea-ultimate)" = "" ]; then
 	echo "IntelliJ IDEA Installation" && \
 	sudo snap install intellij-idea-ultimate --classic && \
