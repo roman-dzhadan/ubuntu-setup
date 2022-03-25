@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # google chrome
 if [ "$(dpkg -l | grep google-chrome)" = "" ]; then
