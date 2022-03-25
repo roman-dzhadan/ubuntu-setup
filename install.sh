@@ -86,9 +86,6 @@ if [ "$(snap list | grep docker)" = "" ]; then
 	docker --version
 fi
 
-# curl
-sudo apt install curl -y
-
 # git
 sudo apt install git -y
 
