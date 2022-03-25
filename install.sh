@@ -18,6 +18,7 @@ MAVEN_VERSION=3.8.5
 GRADLE_VERSION=7.4.1
 
 mkdir -p $DEVKIT_HOME
+sudo rm -rf $DEVKIT_HOME/*
 
 # oracle jdk
 echo "OracleJDK Installation" && \
