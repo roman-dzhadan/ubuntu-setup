@@ -20,12 +20,6 @@ GRADLE_VERSION=7.4.1
 mkdir -p $DEVKIT_HOME
 sudo rm -rf $DEVKIT_HOME/*
 
-# oracle jdk
-echo "OracleJDK Installation" && \
-wget -qO- https://download.oracle.com/java/${JAVA_VERSION}/latest/jdk-${JAVA_VERSION}_linux-x64_bin.tar.gz | sudo tar -xvz -C ${DEVKIT_HOME} && \
-sudo ln -sf ${DEVKIT_HOME}/jdk-${FULL_JAVA_VERSION}/bin/* /usr/bin/ && \
-java --version
-
 # graalvm cc & prerequisites
 echo "GraalVM Installation" && \
 sudo apt-get install build-essential libz-dev zlib1g-dev -y && \
@@ -33,6 +27,12 @@ wget -qO- https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GR
 sudo ln -sf ${DEVKIT_HOME}/graalvm-ce-java${GRAALVM_JAVA_VERSION}-${GRAALVM_VERSION}/bin/* /usr/bin/ && \
 sudo gu install native-image && \
 sudo ln -sf ${DEVKIT_HOME}/graalvm-ce-java${GRAALVM_JAVA_VERSION}-${GRAALVM_VERSION}/bin/* /usr/bin/ && \
+java --version
+
+# oracle jdk
+echo "OracleJDK Installation" && \
+wget -qO- https://download.oracle.com/java/${JAVA_VERSION}/latest/jdk-${JAVA_VERSION}_linux-x64_bin.tar.gz | sudo tar -xvz -C ${DEVKIT_HOME} && \
+sudo ln -sf ${DEVKIT_HOME}/jdk-${FULL_JAVA_VERSION}/bin/* /usr/bin/ && \
 java --version
 
 # maven
