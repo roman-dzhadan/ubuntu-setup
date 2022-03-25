@@ -12,6 +12,7 @@ fi
 DEVKIT_HOME=~/DevKit
 JAVA_VERSION=18
 FULL_JAVA_VERSION=18
+GRAALVM_JAVA_VERSION=17
 GRAALVM_VERSION=22.0.0.2
 MAVEN_VERSION=3.8.5
 GRADLE_VERSION=7.4.1
@@ -27,10 +28,10 @@ java --version
 # graalvm cc & prerequisites
 echo "GraalVM Installation" && \
 sudo apt-get install build-essential libz-dev zlib1g-dev -y && \
-wget -qO- https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAALVM_VERSION}/graalvm-ce-java${JAVA_VERSION}-linux-amd64-${GRAALVM_VERSION}.tar.gz | sudo tar -xvz -C ${DEVKIT_HOME} && \
-sudo ln -sf ${DEVKIT_HOME}/graalvm-ce-java${JAVA_VERSION}-${GRAALVM_VERSION}/bin/* /usr/bin/ && \
+wget -qO- https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAALVM_VERSION}/graalvm-ce-java${GRAALVM_JAVA_VERSION}-linux-amd64-${GRAALVM_VERSION}.tar.gz | sudo tar -xvz -C ${DEVKIT_HOME} && \
+sudo ln -sf ${DEVKIT_HOME}/graalvm-ce-java${GRAALVM_JAVA_VERSION}-${GRAALVM_VERSION}/bin/* /usr/bin/ && \
 sudo gu install native-image && \
-sudo ln -sf ${DEVKIT_HOME}/graalvm-ce-java${JAVA_VERSION}-${GRAALVM_VERSION}/bin/* /usr/bin/ && \
+sudo ln -sf ${DEVKIT_HOME}/graalvm-ce-java${GRAALVM_JAVA_VERSION}-${GRAALVM_VERSION}/bin/* /usr/bin/ && \
 java --version
 
 # maven
