@@ -9,7 +9,7 @@ if [ "$(dpkg -l | grep google-chrome)" = "" ]; then
 fi
 
 DEVKIT_HOME=~/DevKit
-JAVA_VERSION=17
+JAVA_VERSION=18
 FULL_JAVA_VERSION=17.0.2
 GRAALVM_VERSION=22.0.0.2
 MAVEN_VERSION=3.8.5
@@ -104,6 +104,9 @@ if [ "$(dpkg -l | grep steam-launcher)" = "" ]; then
 	sudo dpkg -i /tmp/steam.deb && \
 	rm -f /tmp/steam.deb
 fi
+
+# git
+sudo apt install git -y
 
 # shortcuts
 gsettings set org.gnome.shell favorite-apps "['org.gnome.Terminal.desktop', 'google-chrome.desktop', 'intellij-idea-ultimate_intellij-idea-ultimate.desktop', 'telegram-desktop_telegram-desktop.desktop', 'spotify_spotify.desktop', 'acestreamplayer_acestreamplayer.desktop', 'org.gnome.Nautilus.desktop']"
